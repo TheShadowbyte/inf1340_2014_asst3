@@ -14,10 +14,9 @@ __status__ = "Prototype"
 import json
 import datetime
 
-stock_data = []
 #Global variables.
 monthly_averages = []
-
+stock_data = []
 
 def read_stock_data(stock_name, stock_file_name):
     """
@@ -27,11 +26,14 @@ def read_stock_data(stock_name, stock_file_name):
     :return:
     """
 
+    #clear the contents of monthly_averages
+    monthly_averages.clear()
+
+    #read json file into stock_data file
+    stock_data_history = read_json_from_file(stock_file_name)
+
     #temporary storage arrays to store monthly sum of numerator and denominator
     monthly_sum = {}
-
-    #read json file
-    stock_data_history = read_json_from_file(stock_file_name)
 
     for daily_stock_result in stock_data_history:
         year_month = datetime.datetime.strptime(daily_stock_result['Date'], '%Y-%m-%d').strftime('%Y/%m')
@@ -61,8 +63,8 @@ def six_best_months():
     """
 
     #Use monthly_averages variable and apply sorting algorithms on list to get the best 6
-
-    return [('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0)]
+    best_six = sorted(monthly_averages, key=lambda averages:averages[1], reverse=True)[:6]
+    return best_six
 
 
 def six_worst_months():
@@ -72,8 +74,8 @@ def six_worst_months():
     """
 
     #Use monthly_averages variable and apply sorting algorithms on list to get the worst 6
-
-    return [('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0), ('', 0.0)]
+    worst_six = sorted(monthly_averages, key=lambda averages:averages[1])[:6]
+    return worst_six
 
 
 def read_json_from_file(file_name):
