@@ -30,6 +30,13 @@ class StockMiner():
         self.stock_name = stock_name
         self.monthly_averages = []
         self.stock_data = self.read_json_from_file(stock_file_name)
+        self.init_monthly_averages_list()
+
+    def init_monthly_averages_list(self):
+        """
+
+        :return:
+        """
         # temporary storage dictionaries to store monthly sum of numerator and denominator
         monthly_sum = {}
 
@@ -54,7 +61,6 @@ class StockMiner():
 
         if len(self.monthly_averages) <= 5:
             raise ValueError("Given Stock file does not contain 5 distinct months")
-
 
     def six_best_months(self):
         """
