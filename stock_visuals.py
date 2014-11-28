@@ -6,15 +6,22 @@ Makes a bar graph out of imported lists of stock tuples
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import mining
+import json
+import datetime
 
-# Import jsons and functions OR function results OR the classes...
+# Gets the required lists of tuples from mining.py
 
+# stock_name = input('Please enter stock name: ')
+# if stock_name != str:
+#     raise TypeError
 
-six_best_months = [('2007/12', 693.76), ('2007/11', 676.55), ('2007/10', 637.38), ('2008/01', 599.42),
-                   ('2008/05', 576.29), ('2008/06', 555.34)]
+stock_name= 'GOOG'
 
-six_worst_months = [('2004/08', 104.66), ('2004/09', 116.38), ('2004/10', 164.52), ('2004/11', 177.09),
-                    ('2004/12', 181.01), ('2005/03', 181.18)]
+best_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_best_months()
+worst_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_worst_months()
+
+# Some empty lists for storage
 
 best_stock_prices = []
 best_stock_dates = []
@@ -22,21 +29,25 @@ worst_stock_prices = []
 worst_stock_dates = []
 
 
-def sort_stock_tuples(stock_result):
+
+def sort_stock_results(best_months_list, worst_months_list):
     """
-    (list of tuples) - > list
+    Takes the two results of StockMiner's lists and organizes the contents into variables for graphing
+    :param best_months_list:
+    :param worst_months_list:
+    :return:
     """
-    for datum in stock_result:
-        if datum[1] > 300:
-            best_stock_dates.append(datum[0])
-            best_stock_prices.append(datum[1])
-        else:
-            worst_stock_dates.append(datum[0])
-            worst_stock_prices.append(datum[1])
+    for datum in best_months:
+        best_stock_dates.append(datum[0])
+        best_stock_prices.append(datum[1])
+
+    for datum in worst_months:
+        worst_stock_dates.append(datum[0])
+        worst_stock_prices.append(datum[1])
 
 
-sort_stock_tuples(six_best_months)
-sort_stock_tuples(six_worst_months)
+# Runs the functions so we can make a graph
+sort_stock_results(best_months, worst_months)
 
 N = 6
 ind = np.arange(N)  # the x locations for the groups
@@ -49,8 +60,8 @@ prices1 = ax1.bar(ind, best_stock_prices, width, color='#99CC00', align='center'
 prices2 = ax2.bar(ind, worst_stock_prices, width, color='#FF0066', align='center')
 
 # sets the titles for each subplots
-ax1.set_title('stock_name\n best average prices')
-ax2.set_title('stock_name\n worst average prices')
+ax1.set_title(stock_name + '\n best average prices')
+ax2.set_title(stock_name + '\n worst average prices')
 
 # sets ticks along the x-axis
 ax1.set_xticks(ind)
