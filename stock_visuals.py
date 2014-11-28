@@ -16,7 +16,7 @@ import datetime
 # if stock_name != str:
 #     raise TypeError
 
-stock_name= 'GOOG'
+stock_name = 'GOOG'
 
 best_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_best_months()
 worst_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_worst_months()
