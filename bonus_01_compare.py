@@ -1,16 +1,17 @@
 __author__ = 'Dimitar'
 
 import math
-from mining import *
+import mining
 
-#stock1 = StockMiner("first_stock", "data/GOOG.json")
-#stock2 = StockMiner("second_stock", "data/GOOG.json")
 
-first_stock_object = StockMiner
-first_stock = first_stock_object.get_monthly_averages_list(self)
+first_stock = mining.StockMiner("first_stock", "data/GOOG.json").get_monthly_averages_list()
+second_stock = mining.StockMiner("first_stock", "data/GOOG.json").get_monthly_averages_list()
 
-second_stock_object = StockMiner
-second_stock = second_stock_object.get_monthly_averages_list(self)
+first_stock_list = [element[1] for element in first_stock]
+second_stock_list = [element[1] for element in second_stock]
+
+print(first_stock_list)
+print(second_stock_list)
 
 
 def compare_two_stocks(stock1, stock2):
@@ -70,4 +71,4 @@ def compare_two_stocks(stock1, stock2):
         raise ValueError("Error with output.")
 
 
-compare_two_stocks(first_stock, second_stock)
+compare_two_stocks(first_stock_list, second_stock_list)
