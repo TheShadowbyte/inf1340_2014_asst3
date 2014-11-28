@@ -3,15 +3,11 @@ __author__ = 'Dimitar'
 import math
 import mining
 
-
 first_stock = mining.StockMiner("first_stock", "data/GOOG.json").get_monthly_averages_list()
-second_stock = mining.StockMiner("first_stock", "data/TSE-SO.json").get_monthly_averages_list()
+second_stock = mining.StockMiner("second_stock", "data/TSE-SO.json").get_monthly_averages_list()
 
 first_stock_list = [element[1] for element in first_stock]
 second_stock_list = [element[1] for element in second_stock]
-
-# print(first_stock_list)
-# print(second_stock_list)
 
 
 def compare_two_stocks(stock1, stock2):
