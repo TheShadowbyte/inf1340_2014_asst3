@@ -9,14 +9,17 @@ def compare_two_stocks(stock1, stock2):
     Calculates and compares the standard deviation of two stocks' monthly averages.
     :param stock1: String of the first stock's file location
     :param stock2: String of the second stock's file location
-    :return:
+    :return: A message indicating which stock has a higher standard deviation, or if they are both the same.
     """
 
-    # Initiates the objects for both stocks from the StockMiner class
-    # and calls the method for getting the monthly average lists for both stocks.
+    # Initiates the objects for both stocks from the StockMiner class and calls the method
+    # for getting the monthly average lists for both stocks. The variables store a list of
+    # tuples of monthly averages.
     first_stock = mining.StockMiner("first_stock", stock1).get_monthly_averages_list()
     second_stock = mining.StockMiner("second_stock", stock2).get_monthly_averages_list()
 
+    # Creates a list for each stock. The lists are populated by the second elements of the tuples
+    # within the fetched monthly averages lists. The first elements are undesired since they are dates.
     first_stock_list = [element[1] for element in first_stock]
     second_stock_list = [element[1] for element in second_stock]
 
@@ -60,8 +63,8 @@ def compare_two_stocks(stock1, stock2):
 
     squared_values_list2_mean /= len(squared_values_list1)
 
-    # The mean values within the squared values lists are square rooted and rounded to 6 decimal places, the latter
-    # is done in order to escape any possible floating-point errors.
+    # The mean values within the squared values lists are square rooted and rounded to 6 decimal places,
+    # the latter is done in order to escape any possible floating-point errors.
     std_dev_1 = round(math.sqrt(squared_values_list1_mean), 6)
     std_dev_2 = round(math.sqrt(squared_values_list2_mean), 6)
 
