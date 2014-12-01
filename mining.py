@@ -1,29 +1,19 @@
 #!/usr/bin/env python3
 
 """ Reads Jsons containing daily stock data and returns the best and worst performances by month """
-
 __author__ = 'Curtis and Dimitar and Shawn'
-__email__ = "ses@drsusansim.org"
-
-__copyright__ = "2014 Susan Sim"
-__license__ = "MIT License"
-
-__status__ = "Prototype"
 
 # imports one per line
 import json
 import datetime
-
-# Global variables.
-
 
 class StockMiner():
 
     def __init__(self, stock_name, stock_file_name):
         """
         Opens JSONs containing historical stock data and compiles monthly averages of trade volume and closing price.
+        :param stock_name: string that will store the stock name of the chosen JSON file
         :param stock_file_name: A JSON formatted file where daily stock data is kept
-        :param
         :return: monthly_averages, a list of tuples of monthly stock data
         """
 
@@ -34,8 +24,7 @@ class StockMiner():
 
     def init_monthly_averages_list(self):
         """
-
-        :return:
+        Initialization function to store the month strings and corresponding stock averages to the monthly_averages list
         """
         # temporary storage dictionaries to store monthly sum of numerator and denominator
         monthly_sum = {}
@@ -59,6 +48,7 @@ class StockMiner():
             denominator = monthly_sum[yr_month_key]['denominator']
             self.monthly_averages.append((yr_month_key, round(numerator/denominator, 2)))
 
+        # Raise ValueError if the given stock file has less than 5 distinct months
         if len(self.monthly_averages) <= 5:
             raise ValueError("Given Stock file does not contain 5 distinct months")
 
