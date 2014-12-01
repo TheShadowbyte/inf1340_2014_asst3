@@ -12,6 +12,7 @@ __status__ = "Prototype"
 
 # imports one per line
 from mining import *
+from bonus_01_compare import *
 
 
 def test_goog():
@@ -27,3 +28,8 @@ def test_goog():
         #assert six_best_months() ==
 
      #assert six_worst_months() ==
+
+
+def test_bonus_01():
+    assert compare_two_stocks("data/GOOG.json", "data/TSE-SO.json") == \
+           "Stock 1 has a higher standard deviation, which is 143.6229"
