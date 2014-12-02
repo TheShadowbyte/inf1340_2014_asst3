@@ -147,7 +147,6 @@ def plot_graph():
                 color='#FF0066')
     red_worst = mpatches.Patch(color='#FF0066')
 
-
     # all the labelling, ticks based on dates, and some style stuff
     ax.set_title(stock_title + '\nHistorical Monthly Prices')
     ax.spines["right"].set_visible(False)
@@ -161,22 +160,18 @@ def plot_graph():
     datemin = min(datetime_list)
     datemax = max(datetime_list)
     ax.set_xlim(datemin, datemax)
-
-
     box = ax.get_position()
     ax.set_position([box.x0, box.y0 + box.height * 0.1,
                      box.width, box.height * 0.9])
 
     # Put a legend below current axis
-    ax.legend([green_best, red_worst], [ 'Best Months', 'Worst Months'],
+    ax.legend([green_best, red_worst], ['Best Months', 'Worst Months'],
               loc=9, bbox_to_anchor=(0.5, -0.1), ncol=3)
-
 
     # sets the display parametres for mouseover (x = time, y = price)
     def price(x): return '$%1.2f'% x
     ax.format_xdata = mdates.DateFormatter('%Y/%m')
     ax.format_ydata = price
-
     ax.grid(True)
 
     fig.autofmt_xdate()
@@ -190,3 +185,4 @@ if __name__ == '__main__':
     """
     # visualize_stock('data/GOOG.json')
     visualize_stock('data/TSE-SO.json')
+    
