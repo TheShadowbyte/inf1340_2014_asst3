@@ -20,6 +20,14 @@ def compare_two_stocks(stock1, stock2):
     first_stock = mining.StockMiner("first_stock", stock1).get_monthly_averages_list()
     second_stock = mining.StockMiner("second_stock", stock2).get_monthly_averages_list()
 
+    # Name extraction for the two stocks from their file names (file extension and folder location are stripped).
+    first_stock_name = stock1.split(".")[0]
+    second_stock_name = stock2.split(".")[0]
+    if first_stock_name.__contains__("/"):
+        first_stock_name = first_stock_name.split("/")[-1]
+    if second_stock_name.__contains__("/"):
+        second_stock_name = second_stock_name.split("/")[-1]
+
     # Creates a list for each stock. The lists are populated by the second elements of the tuples
     # within the fetched monthly averages lists. The first elements are undesired since they are dates.
     first_stock_list = [element[1] for element in first_stock]
@@ -87,11 +95,12 @@ def compare_two_stocks(stock1, stock2):
     # Compares the standard deviations of the two stocks and returns which one is larger.
     # A case where they are the same is also included.
     if std_dev_1 > std_dev_2:
-        return "Stock 1 has a higher standard deviation, which is " + str(std_dev_1)
+        return first_stock_name + " has a higher standard deviation, which is " + str(std_dev_1)
     elif std_dev_1 < std_dev_2:
-        return "Stock 2 has a higher standard deviation, which is " + str(std_dev_2)
+        return second_stock_name + " has a higher standard deviation, which is " + str(std_dev_2)
     elif std_dev_1 == std_dev_2:
-        return "The 2 stocks have the same standard deviation, which is " + str(std_dev_1)
+        return first_stock_name + " and " + second_stock_name + \
+            " have the same standard deviation, which is " + str(std_dev_1)
     else:
         raise ValueError("Error with output.")
 
