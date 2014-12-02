@@ -1,16 +1,24 @@
-__author__ = 'Curtis and Dimitar and Shawn'
-__email__ = "ses@drsusansim.org"
-
-__copyright__ = "2014 Susan Sim"
-__license__ = "MIT License"
-
-__status__ = "Prototype"
-
-#!/usr/bin/env python
-
 """
+                                bonus_02_visual.py
+
 Creates a line graph out of .json stock histories and marks the six best and six worst months
+
+Uses the following external libraries (all installable with pip)
+
+matplotlib 1.4.2 : a plotting library with many contents, available under BSD freeware license from matplotlib.org
+numpy adding matrix and array support available under BSD freeware license from www.numpy.org
 """
+
+__author__ = 'Curtis and Dimitar and Shawn'
+__email__ = "curtis.mccord@mail.utoronto.ca"
+
+__copyright__ = "No rights reserved"
+__license__ = "Free"
+
+__status__ = "Functional"
+
+
+# !/usr/bin/env python
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,9 +32,14 @@ months = mdates.MonthLocator()  # every month
 yearsFmt = mdates.DateFormatter('%Y')
 
 # gets the lists from mining's StockMiner class and makes them into lists
-best_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_best_months()
-worst_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_worst_months()
-monthly_averages_list = mining .StockMiner('GOOG', 'data/GOOG.json').get_monthly_averages_list()
+# best_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_best_months()
+# worst_months = mining.StockMiner('GOOG', 'data/GOOG.json').six_worst_months()
+# monthly_averages_list = mining .StockMiner('GOOG', 'data/GOOG.json').get_monthly_averages_list()
+
+best_months = mining.StockMiner('TSE-SO', 'data/TSE-SO.json').six_best_months()
+worst_months = mining.StockMiner('TSE-SO', 'data/TSE-SO.json').six_worst_months()
+monthly_averages_list = mining .StockMiner('TSE-SO', 'data/TSE-SO.json').get_monthly_averages_list()
+
 
 # Some empty lists for storage
 best_stock_prices = []
@@ -36,6 +49,8 @@ worst_stock_dates = []
 monthly_prices = []
 monthly_dates = []
 datetime_list = []
+datetime_best_six = []
+datetime_worst_six = []
 
 
 def sort_stock_results(best_months_list, worst_months_list, monthly_list):
@@ -58,11 +73,11 @@ def sort_stock_results(best_months_list, worst_months_list, monthly_list):
         monthly_dates.append(datum[0])
         monthly_prices.append(datum[1])
 
-#runs the functions to get the proper lists
+# runs the functions to get the proper lists
 sort_stock_results(best_months, worst_months, monthly_averages_list)
 
 
-def format_dates(dates_str_list):
+def format_dates(dates_str_list, best_six_dates, worst_six_dates):
     """
     Takes the date strs and creates them as datetime objects
     :param dates_str_list: a list of strs representing
@@ -71,12 +86,23 @@ def format_dates(dates_str_list):
     for date in dates_str_list:
         datetime_list.append(datetime.datetime.strptime(date, "%Y/%m").date())
 
-format_dates(monthly_dates)
+    for date in best_six_dates:
+        datetime_best_six.append(datetime.datetime.strptime(date, "%Y/%m").date())
+
+    for date in worst_six_dates:
+        datetime_worst_six.append(datetime.datetime.strptime(date, "%Y/%m").date())
+
+
+format_dates(monthly_dates, worst_stock_dates, best_stock_dates)
 
 # sets the parametres of the graph to be plotted
 fig, ax = plt.subplots()
 x_len = len(monthly_prices)
-index = np.arange(x_len)
+best_min = min(datetime_best_six)
+best_max = max(datetime_best_six)
+worst_min = min(datetime_worst_six)
+worst_max = max(datetime_worst_six)
+
 
 # Plots the actual graph out of the above lists
 stock_line = plt.plot(datetime_list, monthly_prices, color='#33CCFF', linewidth=3.0, linestyle='-')
@@ -95,6 +121,7 @@ ax.set_ylabel("$\$$ USD")
 ax.xaxis.set_major_locator(years)
 ax.xaxis.set_major_formatter(yearsFmt)
 ax.xaxis.set_minor_locator(months)
+
 # makes sure the x axis is is as long as the data
 datemin = min(datetime_list)
 datemax = max(datetime_list)
@@ -114,7 +141,7 @@ ax.set_position([box.x0, box.y0 + box.height * 0.1,
 
 
 # sets the display parametres for mouseover (x = time, y = price)
-def price(x): return '$%1.2f'%x
+def price(x): return '$%1.2f'% x
 ax.format_xdata = mdates.DateFormatter('%Y/%m')
 ax.format_ydata = price
 

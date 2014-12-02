@@ -7,6 +7,7 @@ __author__ = 'Curtis and Dimitar and Shawn'
 import json
 import datetime
 
+
 class StockMiner():
 
     def __init__(self, stock_name, stock_file_name):

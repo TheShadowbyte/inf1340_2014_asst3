@@ -1,6 +1,6 @@
 __author__ = 'curtismccord'
 
-#!/usr/bin/env python
+    #!/usr/bin/env python
 """
 Makes a bar graph out of imported lists of stock tuples
 """
