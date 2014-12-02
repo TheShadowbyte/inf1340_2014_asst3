@@ -82,8 +82,14 @@ class StockMiner():
         :param file_name: a JSON formatted file
         :return: list converted from json file
         """
+
+
         with open(file_name) as file_handle:
             file_contents = file_handle.read()
+
+        if (file_name.rsplit('.', 1)[-1]).lower() != 'json':
+            print(file_name.rsplit('.', 1)[-1])
+            raise TypeError("File type must be json")
 
         return json.loads(file_contents)
 
