@@ -103,6 +103,3 @@ def compare_two_stocks(stock1, stock2):
             " have the same standard deviation, which is " + str(std_dev_1)
     else:
         raise ValueError("Error with output.")
-
-
-compare_two_stocks("data/GOOG.json", "data/TSE-SO.json")
