@@ -51,3 +51,5 @@ def test_enough_data():
 def test_bonus_01():
     assert compare_two_stocks("data/GOOG.json", "data/TSE-SO.json") == \
         "Stock 1 has a higher standard deviation, which is 143.6229"
+
+#Here is a bunch of stuff
