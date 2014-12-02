@@ -83,7 +83,6 @@ class StockMiner():
         :return: list converted from json file
         """
 
-
         with open(file_name) as file_handle:
             file_contents = file_handle.read()
 
@@ -91,8 +90,12 @@ class StockMiner():
             print(file_name.rsplit('.', 1)[-1])
             raise TypeError("File type must be json")
 
-        return json.loads(file_contents)
+        try:
+            list_to_be_returned = json.loads(file_contents)
+        except ValueError:
+            raise KeyError("Json file content is either corrupted or in incorrect format")
 
+        return list_to_be_returned
     def get_monthly_averages_list(self):
         """
         Return the list of tuples containing the monthly averages

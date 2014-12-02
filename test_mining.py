@@ -43,16 +43,14 @@ def test_file_types():
 # Tests that mining throws the correct error when .jsons are empty
 def test_enough_data():
     with pytest.raises(ValueError):
-        StockMiner('EMPTY_FILE', 'data/empty.json')
-
-    with pytest.raises(ValueError):
         StockMiner('LessThan6Month', 'data/less_than_6_month.json')
 
 # Tests if stock json file has a correct structure
 def test_incorrect_format_json():
     with pytest.raises(KeyError):
         StockMiner('KeyError_STOCK', 'data/key_error_file.json')
-
+    with pytest.raises(KeyError):
+        StockMiner('EMPTY_FILE', 'data/empty.json')
 
 # Tests that bonus_01_compare returns the correct values
 def test_bonus_01():
