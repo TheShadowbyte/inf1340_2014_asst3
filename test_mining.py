@@ -29,24 +29,32 @@ def test_tse():
 # Tests that mining throws the correct error when files are missing
 def test_files_presence():
     with pytest.raises(FileNotFoundError):
-        StockMiner('GOOG', "data/no_such_file.json")
+        StockMiner('WRONG_FILE_NAME', "data/no_such_file.json")
     with pytest.raises(FileNotFoundError):
-        StockMiner('GOOG', "")
+        StockMiner('EMPTY_PATH', "")
 
 
 # Tests that mining throws the correct error when files are of the wrong type (not .jsons)
 def test_file_types():
     with pytest.raises(TypeError):
-        StockMiner('GOOG', "data/file.txt")
+        StockMiner('WRONG_EXTENSION', "data/file.txt")
 
 
 # Tests that mining throws the correct error when .jsons are empty
 def test_enough_data():
     with pytest.raises(ValueError):
-        StockMiner('GOOG', 'data/empty.json')
+        StockMiner('EMPTY_FILE', 'data/empty.json')
+
+    with pytest.raises(ValueError):
+        StockMiner('LessThan6Month', 'data/less_than_6_month.json')
+
+# Tests if stock json file has a correct structure
+def test_incorrect_format_json():
+    with pytest.raises(KeyError):
+        StockMiner('KeyError_STOCK', 'data/key_error_file.json')
 
 
 # Tests that bonus_01_compare returns the correct values
 def test_bonus_01():
     assert compare_two_stocks("data/GOOG.json", "data/TSE-SO.json") == \
-        "Stock 1 has a higher standard deviation, which is 143.6229"
+        "GOOG has a higher standard deviation, which is 143.6229"
