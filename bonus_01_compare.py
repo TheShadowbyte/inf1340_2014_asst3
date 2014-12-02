@@ -21,6 +21,7 @@ def compare_two_stocks(stock1, stock2):
     second_stock = mining.StockMiner("second_stock", stock2).get_monthly_averages_list()
 
     # Name extraction for the two stocks from their file names (file extension and folder location are stripped).
+    # It is assumed that the file name is the stock name.
     first_stock_name = stock1.split(".")[0]
     second_stock_name = stock2.split(".")[0]
     if first_stock_name.__contains__("/"):
